@@ -1,18 +1,30 @@
-var orm = require('../config/orm.js');
+// We prepare our burger model just like every other
+module.exports = function(sequelize, DataTypes){
+  // now, we create a model to represent our employees table
+  var Burger = sequelize.define('burgers', {
+    // primary id
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    // the name of the burger
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    //date
+    date: {
+       type: DataTypes.DATE
+    }
+    // devoured statuse of false
+    devoured: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false
+    },
+  })
 
-var burger = {
-	all: function(cb) {
-		orm.all('burgers', function(res){
-			cb(res)
-		});
-	},
-	create: function(name,cb) {
-		orm.create('burgers', ['burger_name', 'devoured'], [name, false], cb);
-	},
-	update: function(id, cb) {
-		var condition = 'id=' + id;
-		orm.update('burgers', {devoured : true}, condition, cb);
-	}
-};
-
-module.exports = burger;
+  // return the Class, effectively exporting it
+  return Burger;
+}
