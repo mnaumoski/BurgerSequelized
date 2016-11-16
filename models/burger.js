@@ -1,6 +1,6 @@
-// We prepare our burger model just like every other
+// We prepare our burger model
 module.exports = function(sequelize, DataTypes){
-  // now, we create a model to represent our employees table
+
   var Burger = sequelize.define('burgers', {
     // primary id
     id: {
@@ -9,12 +9,12 @@ module.exports = function(sequelize, DataTypes){
       primaryKey: true
     },
     // the name of the burger
-    name: {
+    burger_name: {
       type: DataTypes.STRING,
       allowNull: false
     },
     //date
-    date: {
+    burger_date: {
        type: DataTypes.DATE
     }
     // devoured statuse of false

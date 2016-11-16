@@ -2,13 +2,15 @@
 // =============================================================
 var express   = require('express');
 var bodyParser  = require('body-parser');
-var app = express();
+var methodOverride = require('method-override');
+
 var PORT = process.env.PORT || 8080;
 
 // add the burger model and sync it.
 // Syncing the model will create a matching table in our MySQL db. 
-var Burger = require("./models")
-Burger.sync(); // creates a burgers table
+var app = express();
+
+var models = require("./models")
 
 // extract our sequelize connection from the models object, to avoid confusion
 var sequelizeConnection = models.sequelize
@@ -25,15 +27,28 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({type:'application/vnd.api+json'}));
 
 // static directory
-app.use(express.static('app/public'));
+app.use(express.static(process.cwd() + '/public'));
 
+//override with POST having ?_method=DELETE
+app.use(methodOverride('_method'));
+var exphbs = require('express-handlebars');
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main'
+}));
 
+app.set('view engine', 'handlebars');
+
+var routes = require('./controllers/controller.js');
 
 // Routes
 // =============================================================
 
-require("./routes/api-routes.js")(app)
-require("./routes/html-routes.js")(app)
+app.use('/', routes);
+
+
+
+// require("./routes/api-routes.js")(app)
+// require("./routes/html-routes.js")(app)
 
 
 

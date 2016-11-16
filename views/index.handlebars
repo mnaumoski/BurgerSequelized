@@ -1,0 +1,40 @@
+<div class="container">
+
+{{!-- Order Burger --}}
+<form method="POST" action="/burgers/create" class="button-size">
+<label for="textarea1"><h3>Order Here</h3></label>
+  <textarea required id="textarea1" class="materialize-textarea" type="text" name="burger_name"></textarea>
+  <button class="waves-effect waves-light btn" type="submit">Hurry Up Fast Food</button>
+</form>
+<br>
+{{!-- Added Burgers that are not devoured --}}
+<div class="row">
+  <div class="col s6">
+      {{#each burgers}}
+          {{#unless this.devoured}}
+            <img class="circle" src="../../assets/images/burgerBlack.jpeg">
+              <span class="card-title"><p>Order: #{{this.id}}</p> <p>Burger: {{this.burger_name}} </p></span><p>Time: {{this.burger_date}}</p>
+                        
+                  <form action="/update?_method=PUT" method="POST" class="button-size">
+                  
+                  <input type="hidden" name="name"  value="{{this.burger_name}}">
+                  <button class="waves-effect waves-light btn" type="submit">Devour it!</button>
+                        </form>
+          {{/unless}}
+        {{/each}}
+    </div>
+
+<div class="col s6">
+{{!-- List of devoured: --}}
+<h4>Devoured Burgers:</h4>
+    {{#each burgers}}
+      {{#if this.devoured}}
+        <div class="row">
+          <img class="circle" src="../../assets/images/burgerBlack.jpeg">
+            <span class="card-title"><p>Order: #{{this.id}}</p> <p>Burger: {{this.burger_name}} </p></span><p>Time: {{this.burger_date}}</p>
+        </div>
+      {{/if}}
+    {{/each}}
+      </div>
+</div>
+</div>

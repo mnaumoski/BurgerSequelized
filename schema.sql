@@ -7,9 +7,8 @@ DROP TABLE IF EXISTS burgers;
 # Create the burgers table
 CREATE TABLE burgers (
 id int NOT NULL AUTO_INCREMENT,
-name varchar(255) NOT NULL,
+burger_name varchar(255) NOT NULL,
 burger_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 devoured boolean NOT NULL DEFAULT FALSE,
 PRIMARY KEY (id)
-
 );
